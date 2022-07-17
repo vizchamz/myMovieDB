@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRef } from 'react';
 import axios from "axios";
 import Card from 'react-bootstrap/Card';
@@ -30,6 +30,24 @@ const Movies = () => {
         const imageObjectURL = URL.createObjectURL(imageBlob);
         setImg2(imageObjectURL);
     };
+
+    useEffect(() => {
+        const url2 = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API}`;
+        
+        axios.get(url2).then(res => {
+            const movieId = res.data.results[0].id
+            const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API}&language=en-US`;
+            axios.get(url).then(res => {
+                setGenres(res.data.genres);
+                fetchImage(res.data.poster_path);
+                setOverview(res.data.overview);
+                setTitle(res.data.original_title);
+                setReleaseDate(res.data.release_date);
+                setHomepage(res.data.homepage);
+                fetchImage2(res.data.backdrop_path);
+            })
+        })
+    }, [])
 
     function handleClick(e) {
         e.preventDefault();
