@@ -14,9 +14,6 @@ const Movies = () => {
     const [title, setTitle] = useState([]);
     const [releaseDate, setReleaseDate] = useState([]);
     const [homepage, setHomepage] = useState([]);
-    const [movieId, setMovieId] = useState([]);
-    // const url = `https://api.themoviedb.org/3/movie/49013?api_key=${process.env.REACT_APP_API}&language=en-US`;
-    // const url2 = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API}&language=en-US&query=${movieName}`;
 
     const inputRef = useRef(null);
 
@@ -33,40 +30,6 @@ const Movies = () => {
         const imageObjectURL = URL.createObjectURL(imageBlob);
         setImg2(imageObjectURL);
     };
-
-    // const handleChange = event => {
-    //     setMovieName(event.target.value);
-    
-    //     console.log('value is:', event.target.value);
-    //   };
-
-    // const handleClick = event => {
-    //     event.preventDefault();
-    
-    //     console.log('handleClick', movieName);
-    // };
-
-    // useEffect(() => {
-    //     axios.get(url2).then(res => {
-    //         setMovieId(res.data.results[0].id);
-    //     })
-
-    //     axios.get(url).then(res => {
-    //         setGenres(res.data.genres);
-    //         fetchImage(res.data.poster_path);
-    //         setOverview(res.data.overview);
-    //         setTitle(res.data.original_title);
-    //         setReleaseDate(res.data.release_date);
-    //         setHomepage(res.data.homepage);
-    //         fetchImage2(res.data.backdrop_path);
-    //     })
-    // }, [url, url2])
-
-    // const toggleButtonState = () => {
-        // const handleClick = event => {
-        // event.preventDefault();
-        // console.log('handleClick', movieName);
-        // setMovieName(event.target.value);
 
     function handleClick(e) {
         e.preventDefault();
@@ -88,16 +51,6 @@ const Movies = () => {
             })
         })
     }
-
-
-
-
-    //   };
-        // let selectedWord = window.getSelection().toString();
-        // fetchAPI(selectedWord).then(result => {
-        //     this.setState({ result });
-        // });
-    // };
 
     return <div className="App" style={{
         backgroundImage: `url(${img2})`,
