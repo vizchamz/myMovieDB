@@ -1,6 +1,6 @@
 {
-  "short_name": "My Movie DB",
-  "name": "My Movie DB",
+  "short_name": "Movie DB",
+  "name": "Movie DB",
   "icons": [
     {
       "src": "favicon.ico",

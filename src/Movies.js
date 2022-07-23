@@ -71,51 +71,27 @@ const Movies = () => {
     }
 
     return <div className="App" style={{
-        backgroundImage: `url(${img2})`,
-        backgroundRepeat: 'no-repeat',
-        width: '100%',
-        height: '100%',
-        position: 'absolute', left: '50%', top: '50%',
-        transform: 'translate(-50%, -50%)'
+        backgroundImage: `url(${img2})`
     }}>
-        <h1 style={{
-            position: 'absolute',
-            left: '45%',
-            top: '5%'
-        }}>Movie DB</h1>
+        <div className="text-center fs-1 fw-bold font-monospace text-light bg-dark">Movie DB</div>
         <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail" style={{
-                width: '40rem',
-                position: 'absolute',
-                left: '50%',
-                top: '15%',
-                transform: 'translate(-50%, -50%)'
-            }}>
-                <Form.Control type="text" placeholder="Enter Movie Name" name="movieName" ref={ inputRef } autoComplete="off"/>
-                <Button variant="primary" type="submit" onClick={ handleClick } style={{
-                    position: 'absolute',
-                    left: '110%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)'
-                }}>
+            <Form.Group className="mb-4 pt-4 d-flex justify-content-md-center" controlId="formBasicEmail">
+                <Form.Control className="form-control mx-2 w-75" type="text" placeholder="Enter Movie Name" name="movieName" ref={ inputRef } autoComplete="off" aria-describedby="submit-button"/>
+                <Button id="submit-button" variant="primary" type="submit" onClick={ handleClick }>
                     Submit
                 </Button>
             </Form.Group>
         </Form>
-        <Card style={{
-            width: '70rem',
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)'
+        <Card className="w-75 mb-5" style={{
+            left: '12.5%'
         }}>
-            <div class="row no-gutters">
-                <div class="col-md-4">
+            <div className="row g-4">
+                <div className="col-md-4">
                     <Card.Img variant="top" src={img} />
                 </div>
-                <div class="col-md-8">
+                <div className="col-md-8">
                     <Card.Body>
-                        <Card.Title>{title}</Card.Title>
+                        <Card.Title className="fs-4">{title}</Card.Title>
                         <Card.Text>
                             {overview}
                         </Card.Text>
@@ -126,12 +102,13 @@ const Movies = () => {
                             <span>{releaseDate}</span>
                         </div>
                         <div>
-                            <a href={homepage}>{homepage}</a>
+                            <a role="button" aria-pressed="true" className="text-decoration-none btn btn btn-outline-success" href={homepage} target="_blank" rel="noreferrer">Official Site</a>
                         </div>
                     </Card.Body>
                 </div>
             </div>
         </Card>
+        <div className="text-center fs-3 fw-bold font-monospace text-light bg-dark">&copy; Movie DB by Visal Dharmasiri</div>
     </div>
 };
 
