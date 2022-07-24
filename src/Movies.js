@@ -32,10 +32,11 @@ const Movies = () => {
     };
 
     useEffect(() => {
+        sessionStorage.setItem('movieCount', 1);
         const url2 = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API}`;
         
         axios.get(url2).then(res => {
-            const movieId = res.data.results[0].id
+            const movieId = res.data.results[0].id;
             const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API}&language=en-US`;
             axios.get(url).then(res => {
                 setGenres(res.data.genres);
@@ -48,6 +49,54 @@ const Movies = () => {
             })
         })
     }, [])
+
+    function handleClick2(e) {
+        // console.log(sessionStorage.getItem('movieCount'));
+        e.preventDefault();
+        let movieCount = sessionStorage.getItem('movieCount');
+
+        const url2 = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API}`;
+        
+        axios.get(url2).then(res => {
+            const movieId = res.data.results[movieCount].id;
+            const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API}&language=en-US`;
+            axios.get(url).then(res => {
+                setGenres(res.data.genres);
+                fetchImage(res.data.poster_path);
+                setOverview(res.data.overview);
+                setTitle(res.data.original_title);
+                setReleaseDate(res.data.release_date);
+                setHomepage(res.data.homepage);
+                fetchImage2(res.data.backdrop_path);
+                sessionStorage.setItem('movieCount', parseInt(movieCount) + 1)
+            })
+        })
+    }
+
+    // function handleClick3(e) {
+    //     console.log(sessionStorage.getItem('movieCount'));
+    //     e.preventDefault();
+    //     let movieCount = sessionStorage.getItem('movieCount');
+
+    //     // if (!(movieCount <= 1)) {
+    //         const url2 = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API}`;
+
+    //         axios.get(url2).then(res => {
+    //             const movieId = res.data.results[parseInt(movieCount) - 1].id;
+    //             const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API}&language=en-US`;
+    //             axios.get(url).then(res => {
+    //                 setGenres(res.data.genres);
+    //                 fetchImage(res.data.poster_path);
+    //                 setOverview(res.data.overview);
+    //                 setTitle(res.data.original_title);
+    //                 setReleaseDate(res.data.release_date);
+    //                 setHomepage(res.data.homepage);
+    //                 fetchImage2(res.data.backdrop_path);
+    //                 sessionStorage.setItem('movieCount', parseInt(movieCount) - 1)
+    //             })
+    //         })
+    //     // }
+    // }
 
     function handleClick(e) {
         e.preventDefault();
@@ -102,9 +151,19 @@ const Movies = () => {
                             <span>{releaseDate}</span>
                         </div>
                         <div>
-                            <a role="button" aria-pressed="true" className="text-decoration-none btn btn btn-outline-success" href={homepage} target="_blank" rel="noreferrer">Official Site</a>
+                            <a role="button" aria-pressed="true" className="text-decoration-none btn btn-outline-success" href={homepage} target="_blank" rel="noreferrer">Official Site</a>
                         </div>
                     </Card.Body>
+                    {/* <Button id="submit-button3" variant="primary" type="submit" onClick={ handleClick3 }>
+                            Previous
+                        </Button> */}
+                    <div id="submit-button2" type="submit" onClick={handleClick2} className="btn btn-outline-warning mx-3 mb-3" style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        right: 0
+                    }}>
+                        Next
+                    </div>
                 </div>
             </div>
         </Card>
