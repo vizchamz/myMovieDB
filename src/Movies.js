@@ -3,7 +3,6 @@ import { useRef } from 'react';
 import axios from "axios";
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const Movies = () => {
@@ -51,7 +50,6 @@ const Movies = () => {
     }, [])
 
     function handleClick2(e) {
-        // console.log(sessionStorage.getItem('movieCount'));
         e.preventDefault();
         let movieCount = sessionStorage.getItem('movieCount');
 
@@ -68,35 +66,34 @@ const Movies = () => {
                 setReleaseDate(res.data.release_date);
                 setHomepage(res.data.homepage);
                 fetchImage2(res.data.backdrop_path);
-                sessionStorage.setItem('movieCount', parseInt(movieCount) + 1)
+                sessionStorage.setItem('movieCount', parseInt(movieCount) + 1);
             })
         })
     }
 
-    // function handleClick3(e) {
-    //     console.log(sessionStorage.getItem('movieCount'));
-    //     e.preventDefault();
-    //     let movieCount = sessionStorage.getItem('movieCount');
+    function handleClick3(e) {
+        e.preventDefault();
+        let movieCount = sessionStorage.getItem('movieCount');
 
-    //     // if (!(movieCount <= 1)) {
-    //         const url2 = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API}`;
+        if (!(movieCount <= 1)) {
+            const url2 = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API}`;
 
-    //         axios.get(url2).then(res => {
-    //             const movieId = res.data.results[parseInt(movieCount) - 1].id;
-    //             const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API}&language=en-US`;
-    //             axios.get(url).then(res => {
-    //                 setGenres(res.data.genres);
-    //                 fetchImage(res.data.poster_path);
-    //                 setOverview(res.data.overview);
-    //                 setTitle(res.data.original_title);
-    //                 setReleaseDate(res.data.release_date);
-    //                 setHomepage(res.data.homepage);
-    //                 fetchImage2(res.data.backdrop_path);
-    //                 sessionStorage.setItem('movieCount', parseInt(movieCount) - 1)
-    //             })
-    //         })
-    //     // }
-    // }
+            axios.get(url2).then(res => {
+                const movieId = res.data.results[parseInt(movieCount) - 2].id;
+                const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API}&language=en-US`;
+                axios.get(url).then(res => {
+                    setGenres(res.data.genres);
+                    fetchImage(res.data.poster_path);
+                    setOverview(res.data.overview);
+                    setTitle(res.data.original_title);
+                    setReleaseDate(res.data.release_date);
+                    setHomepage(res.data.homepage);
+                    fetchImage2(res.data.backdrop_path);
+                    sessionStorage.setItem('movieCount', parseInt(movieCount) - 1);
+                })
+            })
+        }
+    }
 
     function handleClick(e) {
         e.preventDefault();
@@ -120,23 +117,34 @@ const Movies = () => {
     }
 
     return <div className="App" style={{
-        backgroundImage: `url(${img2})`
+        backgroundImage: `url(${img2})`,
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover'
     }}>
         <div className="text-center fs-1 fw-bold font-monospace text-light bg-dark">Movie DB</div>
         <Form>
             <Form.Group className="mb-4 pt-4 d-flex justify-content-md-center" controlId="formBasicEmail">
-                <Form.Control className="form-control mx-2 w-75" type="text" placeholder="Enter Movie Name" name="movieName" ref={ inputRef } autoComplete="off" aria-describedby="submit-button"/>
-                <Button id="submit-button" variant="primary" type="submit" onClick={ handleClick }>
+                <Form.Control className="form-control mx-2 w-75" type="text" placeholder="Enter Movie Name" ref={ inputRef } autoComplete="off" aria-describedby="submit-button"/>
+                <div id="submit-button" className="btn btn-dark" type="submit" onClick={ handleClick }>
                     Submit
-                </Button>
+                </div>
             </Form.Group>
         </Form>
         <Card className="w-75 mb-5" style={{
-            left: '12.5%'
+            boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
+            borderRadius: '10px',
+            backdropFilter: 'blur(14px)',
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            left: '12.5%',
+            color: 'white'
         }}>
             <div className="row g-4">
                 <div className="col-md-4">
-                    <Card.Img variant="top" src={img} />
+                    <Card.Img variant="top" src={img} style={{
+                        boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
+                        borderRadius: '10px'
+                    }} />
                 </div>
                 <div className="col-md-8">
                     <Card.Body>
@@ -144,30 +152,34 @@ const Movies = () => {
                         <Card.Text>
                             {overview}
                         </Card.Text>
-                        <div>
+                        <div className="text-dark">
                             {genres.map(c => <span key={c.id}><b> {c.name} </b></span>)}
                         </div>
                         <div>
                             <span>{releaseDate}</span>
                         </div>
                         <div>
-                            <a role="button" aria-pressed="true" className="text-decoration-none btn btn-outline-success" href={homepage} target="_blank" rel="noreferrer">Official Site</a>
+                            <a role="button" aria-pressed="true" className="text-decoration-none btn btn-outline-light" href={homepage} target="_blank" rel="noreferrer">Official Site</a>
                         </div>
                     </Card.Body>
-                    {/* <Button id="submit-button3" variant="primary" type="submit" onClick={ handleClick3 }>
-                            Previous
-                        </Button> */}
-                    <div id="submit-button2" type="submit" onClick={handleClick2} className="btn btn-outline-warning mx-3 mb-3" style={{
+                    <div className="mx-3 mb-3" style={{
                         position: 'absolute',
                         bottom: 0,
                         right: 0
                     }}>
-                        Next
+                        <div id="submit-button3" type="submit" onClick={handleClick3} className="btn btn-outline-warning mx-3">
+                            Back
+                        </div>
+                        <div id="submit-button2" type="submit" onClick={handleClick2} className="btn btn-outline-warning">
+                            Next
+                        </div>
                     </div>
                 </div>
             </div>
         </Card>
-        <div className="text-center fs-3 fw-bold font-monospace text-light bg-dark">&copy; Movie DB by Visal Dharmasiri</div>
+        <div className="text-center fs-5 fw-bold text-light bg-dark pt-2 pb-2" style={{
+            fontFamily: 'sans-serif'
+        }}>&copy; Visal Dharmasiri</div>
     </div>
 };
 
