@@ -267,21 +267,33 @@ const Movies = () => {
         axios.get(url).then(res => {
             fetchImage3(res.data.poster_path);
             setTitle2(res.data.original_title);
-            setReleaseDate2(res.data.release_date);
+            if (res.data.release_date !== "") {
+                setReleaseDate2(res.data.release_date.split("-")[0]);
+            } else {
+                setReleaseDate2("TBA");
+            }
         })
 
         const url2 = `https://api.themoviedb.org/3/movie/${movieIds[1]}?api_key=${process.env.REACT_APP_API}&language=en-US`;
         axios.get(url2).then(res => {
             fetchImage4(res.data.poster_path);
             setTitle3(res.data.original_title);
-            setReleaseDate3(res.data.release_date);
+            if (res.data.release_date !== "") {
+                setReleaseDate3(res.data.release_date.split("-")[0]);
+            } else {
+                setReleaseDate3("TBA");
+            }
         })
 
         const url3 = `https://api.themoviedb.org/3/movie/${movieIds[2]}?api_key=${process.env.REACT_APP_API}&language=en-US`;
         axios.get(url3).then(res => {
             fetchImage5(res.data.poster_path);
             setTitle4(res.data.original_title);
-            setReleaseDate4(res.data.release_date);
+            if (res.data.release_date !== "") {
+                setReleaseDate4(res.data.release_date.split("-")[0]);
+            } else {
+                setReleaseDate4("TBA");
+            }
         })
 
         // let id = sessionStorage.getItem('id');
@@ -380,7 +392,7 @@ const Movies = () => {
                     borderRadius: '10px'
                 }} />
                 <div className="card-body">
-                    <h5 className="card-title">{title2}</h5>
+                    <h5 className="card-title">{title2} ({releaseDate2})</h5>
                     {/* <p className="card-text">{releaseDate2}</p> */}
                     {/* <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> */}
                 </div>
@@ -398,7 +410,7 @@ const Movies = () => {
                     borderRadius: '10px'
                 }} />
                 <div className="card-body">
-                    <h5 className="card-title">{title3}</h5>
+                    <h5 className="card-title">{title3} ({releaseDate3})</h5>
                     {/* <p className="card-text">{releaseDate3}</p> */}
                     {/* <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> */}
                 </div>
@@ -416,7 +428,7 @@ const Movies = () => {
                     borderRadius: '10px'
                 }} />
                 <div className="card-body">
-                    <h5 className="card-title">{title4}</h5>
+                    <h5 className="card-title">{title4} ({releaseDate4})</h5>
                     {/* <p className="card-text">{releaseDate4}</p> */}
                     {/* <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> */}
                 </div>
