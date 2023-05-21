@@ -444,7 +444,7 @@ const Movies = () => {
                     </div>
                 </div>
             </div>
-            <div className="text-center fs-6 fw-bold text-light bg-dark pt-1 pb-1" style={{
+            <div className="text-center fs-14 text-light bg-dark pt-1 pb-1" style={{
                 fontFamily: 'sans-serif',
                 // position: 'absolute'
             }}>&copy; Copyright {year} Visal Dharmasiri. All Rights Reserved.</div>
