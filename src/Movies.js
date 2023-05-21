@@ -22,13 +22,15 @@ const Movies = () => {
     const [img5, setImg5] = useState();
     const [title4, setTitle4] = useState([]);
     const [releaseDate4, setReleaseDate4] = useState([]);
-    const [toggle, settoggle] = useState(14);
+    const [toggle, settoggle] = useState(30);
     const [id, setId] = useState([]);
+    const year = useState(new Date().getFullYear());
 
     function setIds1() {
         document.getElementById('card-group').hidden = true;
         // document.getElementById('App').style.backdropFilter = `blur(0px)`;
         document.getElementById('card').style.opacity = 1;
+        document.getElementById('card').style.display = 'block';
         let ids = JSON.parse(sessionStorage.getItem('ids'));
         const url = `https://api.themoviedb.org/3/movie/${ids[0]}?api_key=${process.env.REACT_APP_API}&language=en-US`;
         axios.get(url).then(res => {
@@ -46,6 +48,7 @@ const Movies = () => {
         document.getElementById('card-group').hidden = true;
         // document.getElementById('App').style.backdropFilter = `blur(0px)`;
         document.getElementById('card').style.opacity = 1;
+        document.getElementById('card').style.display = 'block';
         let ids = JSON.parse(sessionStorage.getItem('ids'));
         const url = `https://api.themoviedb.org/3/movie/${ids[1]}?api_key=${process.env.REACT_APP_API}&language=en-US`;
         axios.get(url).then(res => {
@@ -63,6 +66,7 @@ const Movies = () => {
         document.getElementById('card-group').hidden = true;
         // document.getElementById('App').style.backdropFilter = `blur(0px)`;
         document.getElementById('card').style.opacity = 1;
+        document.getElementById('card').style.display = 'block';
         let ids = JSON.parse(sessionStorage.getItem('ids'));
         const url = `https://api.themoviedb.org/3/movie/${ids[2]}?api_key=${process.env.REACT_APP_API}&language=en-US`;
         axios.get(url).then(res => {
@@ -85,6 +89,7 @@ const Movies = () => {
         document.getElementById('card-group').hidden = false;
         document.getElementById('App').style.backdropFilter = `blur(${toggle}px)`;
         document.getElementById('card').style.opacity = 0;
+        document.getElementById('card').style.display = 'none';
     }
 
     // const buttonSubmit = document.getElementById('input-submit');
@@ -141,6 +146,7 @@ const Movies = () => {
         document.getElementById('card-group').hidden = true;
         // document.getElementById('App').style.backdropFilter = `blur(0px)`;
         document.getElementById('card').style.opacity = 1;
+        document.getElementById('card').style.display = 'block';
         const url2 = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API}`;
 
         axios.get(url2).then(res => {
@@ -161,7 +167,7 @@ const Movies = () => {
 
     useEffect(() => {
         document.getElementById('card-group').hidden = true;
-        document.getElementById('App').style.backdropFilter = `blur(14px)`;
+        document.getElementById('App').style.backdropFilter = `blur(${toggle}px)`;
         sessionStorage.setItem('movieCount', 1);
         const url2 = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API}`;
 
@@ -276,6 +282,7 @@ const Movies = () => {
 
         const url2 = `https://api.themoviedb.org/3/movie/${movieIds[1]}?api_key=${process.env.REACT_APP_API}&language=en-US`;
         axios.get(url2).then(res => {
+            fetchImage2(res.data.poster_path);
             fetchImage4(res.data.poster_path);
             setTitle3(res.data.original_title);
             if (res.data.release_date !== "") {
@@ -327,8 +334,8 @@ const Movies = () => {
             <Card className="w-75 mb-5" id="card" style={{
                 boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
                 borderRadius: '10px',
-                backdropFilter: 'blur(14px)',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                backdropFilter: `blur(${toggle}px)`,
+                backgroundColor: 'rgba(0, 0, 0, 0.2)',
                 left: '12.5%',
                 color: 'white'
             }}>
@@ -345,14 +352,14 @@ const Movies = () => {
                             <Card.Text>
                                 {overview}
                             </Card.Text>
-                            <div className="text-dark">
+                            <div className="text-warning">
                                 {genres.map(c => <span key={c.id}><b> {c.name} </b></span>)}
                             </div>
-                            <div>
+                            <div className="mt-2">
                                 <span>{releaseDate}</span>
                             </div>
                             <div>
-                                <a role="button" aria-pressed="true" className="text-decoration-none btn btn-outline-light" href={homepage} target="_blank" rel="noreferrer">Official Site</a>
+                                <a role="button" aria-pressed="true" className="text-decoration-none btn btn-outline-light mt-2" href={homepage} target="_blank" rel="noreferrer">Official Site</a>
                             </div>
                         </Card.Body>
                         <div className="mx-3 mb-3" style={{
@@ -370,69 +377,77 @@ const Movies = () => {
                     </div>
                 </div>
             </Card>
-            <div className="text-center fs-5 fw-bold text-light bg-dark pt-2 pb-2" style={{
-                fontFamily: 'sans-serif'
-            }}>&copy; Visal Dharmasiri</div>
-        </div>
-        <div className="card-group w-75" id="card-group" style={{
-            top: '15%',
-            left: '12.5%',
-            position: 'absolute'
-        }}>
-            <div className="card mx-4 text-center" style={{
-                boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
-                borderRadius: '10px',
-                backdropFilter: 'blur(10px)',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                color: 'white',
-                cursor: 'pointer'
-            }} onClick={setIds1}>
-                <Card.Img variant="top" src={img3} style={{
-                    boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
-                    borderRadius: '10px'
-                }} />
-                <div className="card-body">
-                    <h5 className="card-title">{title2} ({releaseDate2})</h5>
-                    {/* <p className="card-text">{releaseDate2}</p> */}
-                    {/* <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> */}
+            <div className="d-flex justify-content-center">
+                <div className="col-md-10">
+                    <div className="card-group" id="card-group" style={{
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        // marginBottom: '2rem',
+                        // top: '15%',
+                        // left: '12.5%',
+                        // position: 'relative'
+                    }}>
+                        <div className="card text-center mt-1 mb-4 mx-5" style={{
+                            boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
+                            borderRadius: '10px',
+                            backdropFilter: `blur(${toggle}px)`,
+                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                            color: 'white',
+                            cursor: 'pointer'
+                        }} onClick={setIds1}>
+                            <Card.Img variant="top" src={img3} style={{
+                                boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
+                                borderRadius: '10px'
+                            }} />
+                            <div className="card-body">
+                                <h5 className="card-title">{title2} ({releaseDate2})</h5>
+                                {/* <p className="card-text">{releaseDate2}</p> */}
+                                {/* <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> */}
+                            </div>
+                        </div>
+                        <div className="card text-center mt-1 mb-4 mx-5" style={{
+                            boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
+                            borderRadius: '10px',
+                            backdropFilter: `blur(${toggle}px)`,
+                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                            color: 'white',
+                            cursor: 'pointer'
+                        }} onClick={setIds2}>
+                            <Card.Img variant="top" src={img4} style={{
+                                boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
+                                borderRadius: '10px'
+                            }} />
+                            <div className="card-body">
+                                <h5 className="card-title">{title3} ({releaseDate3})</h5>
+                                {/* <p className="card-text">{releaseDate3}</p> */}
+                                {/* <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> */}
+                            </div>
+                        </div>
+                        <div className="card text-center mt-1 mb-4 mx-5" style={{
+                            boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
+                            borderRadius: '10px',
+                            backdropFilter: `blur(${toggle}px)`,
+                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                            color: 'white',
+                            cursor: 'pointer'
+                        }} onClick={setIds3}>
+                            <Card.Img variant="top" src={img5} style={{
+                                boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
+                                borderRadius: '10px'
+                            }} />
+                            <div className="card-body">
+                                <h5 className="card-title">{title4} ({releaseDate4})</h5>
+                                {/* <p className="card-text">{releaseDate4}</p> */}
+                                {/* <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> */}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className="card mx-4 text-center" style={{
-                boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
-                borderRadius: '10px',
-                backdropFilter: 'blur(10px)',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                color: 'white',
-                cursor: 'pointer'
-            }} onClick={setIds2}>
-                <Card.Img variant="top" src={img4} style={{
-                    boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
-                    borderRadius: '10px'
-                }} />
-                <div className="card-body">
-                    <h5 className="card-title">{title3} ({releaseDate3})</h5>
-                    {/* <p className="card-text">{releaseDate3}</p> */}
-                    {/* <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> */}
-                </div>
-            </div>
-            <div className="card mx-4 text-center" style={{
-                boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
-                borderRadius: '10px',
-                backdropFilter: 'blur(10px)',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                color: 'white',
-                cursor: 'pointer'
-            }} onClick={setIds3}>
-                <Card.Img variant="top" src={img5} style={{
-                    boxShadow: '0 15px 25px rgba(129, 124, 124, 0.2)',
-                    borderRadius: '10px'
-                }} />
-                <div className="card-body">
-                    <h5 className="card-title">{title4} ({releaseDate4})</h5>
-                    {/* <p className="card-text">{releaseDate4}</p> */}
-                    {/* <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> */}
-                </div>
-            </div>
+            <div className="text-center fs-6 fw-bold text-light bg-dark pt-1 pb-1" style={{
+                fontFamily: 'sans-serif',
+                // position: 'absolute'
+            }}>&copy; Copyright {year} Visal Dharmasiri. All Rights Reserved.</div>
         </div>
     </div>
 };
